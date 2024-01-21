@@ -1,0 +1,22 @@
+name: Stable version build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push_to_registry:
+    name: Push to Docker Actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Push to repo
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.TOKENGH }}
+          registry: ghcr.io
+          repository: ghcr.io/alserov/k8s
+          tag_with_ref: true
